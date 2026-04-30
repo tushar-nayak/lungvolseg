@@ -1,6 +1,6 @@
 # Lung CT Navigation Prep Pipeline
 
-Real-data lung CT navigation-prep pipeline for CT-based planning experiments:
+Real-data lung CT navigation-prep pipeline for full-volume lung segmentation:
 
 1. download a public chest CT segmentation dataset
 2. prepare compact 3D medical volumes with SimpleITK
@@ -10,7 +10,7 @@ Real-data lung CT navigation-prep pipeline for CT-based planning experiments:
 6. compute validation metrics
 7. generate a short model card
 
-This branch is intentionally real-data only.
+This branch is intentionally narrow: it supports one working dataset and one complete pipeline.
 
 ## Install
 
@@ -74,51 +74,6 @@ python3 scripts/download_zenodo_lung.py \
 ```
 
 Downloaded data and generated outputs are ignored by Git.
-
-## External NIfTI Data
-
-For another real dataset, place paired NIfTI files like this:
-
-```text
-data/
-  raw/
-    case001_ct.nii.gz
-    case001_label.nii.gz
-    case002_ct.nii.gz
-    case002_label.nii.gz
-```
-
-Preprocess:
-
-```bash
-python3 scripts/preprocess_ct.py --input-dir data/raw --output-dir data/preprocessed
-```
-
-Train:
-
-```bash
-python3 scripts/train_segmentation.py \
-  --data-dir data/preprocessed \
-  --output-dir outputs/train \
-  --epochs 50
-```
-
-Infer:
-
-```bash
-python3 scripts/infer_segmentation.py \
-  --checkpoint outputs/train/best_model.pt \
-  --input-image data/preprocessed/case001_ct.nii.gz \
-  --output-label outputs/case001_pred.nii.gz
-```
-
-Extract meshes:
-
-```bash
-python3 scripts/extract_meshes.py \
-  --label-image outputs/case001_pred.nii.gz \
-  --output-dir outputs/case001_meshes
-```
 
 ## Mesh Preview
 
