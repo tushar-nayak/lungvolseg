@@ -34,6 +34,19 @@ python3 scripts/run_zenodo_lung_pipeline.py \
 
 The command downloads the dataset, verifies MD5 hashes, extracts 20 full CT volumes and lung masks, prepares lung-region 3D cases, trains a MONAI 3D UNet, runs inference, exports VTK meshes, computes metrics, and writes a model card.
 
+The same working model code is also mirrored under `code/`:
+
+- `code/lungnav/`: model, training, inference, metrics, mesh export, and dataset pipeline modules
+- `code/scripts/`: runnable downloader and full pipeline scripts
+
+Run the mirrored copy directly with:
+
+```bash
+PYTHONPATH=code python3 code/scripts/run_zenodo_lung_pipeline.py \
+  --workspace outputs/zenodo_lung \
+  --epochs 8
+```
+
 Main outputs:
 
 - `outputs/zenodo_lung/raw/`: downloaded Zenodo archives and metadata
@@ -71,6 +84,14 @@ python3 scripts/download_zenodo_lung.py \
   --target-depth 96 \
   --target-height 128 \
   --target-width 128
+```
+
+Using the mirrored root code:
+
+```bash
+PYTHONPATH=code python3 code/scripts/download_zenodo_lung.py \
+  --raw-dir data/real/zenodo_lung/raw \
+  --cases-dir data/real/zenodo_lung/cases
 ```
 
 Downloaded data and generated outputs are ignored by Git.
