@@ -9,21 +9,26 @@ def write_model_card(
     output_path: str | Path,
     training_summary: dict[str, object],
     metrics_summary: dict[str, object],
-    dataset_name: str = "synthetic chest CT volumes",
+    dataset_name: str = "MedSeg Covid Dataset 1",
     class_names: dict[int, str] | None = None,
 ) -> str:
     output_path = Path(output_path)
     ensure_dir(output_path.parent)
 
     mean_metrics = metrics_summary["mean"]
-    class_names = class_names or training_summary.get("class_names") or {0: "background", 1: "lungs", 2: "airway"}
+    class_names = class_names or training_summary.get("class_names") or {
+        0: "background",
+        1: "ground_glass",
+        2: "consolidation",
+        3: "pleural_effusion",
+    }
     output_classes = ", ".join(str(name) for _, name in sorted(class_names.items()))
     metric_lines = "\n".join(f"- Mean {name}: {value:.4f}" for name, value in sorted(mean_metrics.items()))
     content = f"""# Lung CT Navigation-Prep Model Card
 
 ## Overview
 
-This model segments lungs and the central airway from chest CT volumes to support navigation-planning style preprocessing tasks such as anatomical review, surface generation, and downstream registration experiments.
+This model segments COVID-19 CT findings from chest CT slices prepared as compact 3D pseudo-volumes to support navigation-prep engineering experiments such as anatomical review, surface generation, and downstream registration prototypes.
 
 ## Intended use
 
@@ -50,8 +55,8 @@ This model segments lungs and the central airway from chest CT volumes to suppor
 
 ## Limitations
 
-- The included demo data is synthetic and not clinically representative.
-- Performance on real scanner data, pathology, noise, and acquisition variability is unknown without external validation.
+- The default training command is a smoke test and is not clinically representative.
+- Performance across scanners, pathology, noise, and acquisition variability is unknown without broader external validation.
 - Mesh quality depends on label fidelity and may require post-processing for procedural planning use.
 
 ## Safety
