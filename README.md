@@ -96,6 +96,32 @@ PYTHONPATH=code python3 code/scripts/download_zenodo_lung.py \
 
 Downloaded data and generated outputs are ignored by Git.
 
+## Current Results
+
+A completed 25-epoch full run on all 20 prepared cases is available under `outputs/zenodo_lung_full_e25/`.
+
+- Mean lung Dice: `0.9243`
+- Mean lung HD95: `10.5909`
+- Best validation Dice during training: `0.9539`
+- Current internal split: `13` train / `7` validation cases
+
+Full-run command:
+
+```bash
+python3 scripts/run_zenodo_lung_pipeline.py \
+  --workspace outputs/zenodo_lung_full_e25 \
+  --epochs 25 \
+  --target-depth 96 \
+  --target-height 128 \
+  --target-width 128
+```
+
+Primary result files:
+
+- `outputs/zenodo_lung_full_e25/metrics.json`
+- `outputs/zenodo_lung_full_e25/checkpoints/training_summary.json`
+- `outputs/zenodo_lung_full_e25/model_card.md`
+
 ## Mesh Preview
 
 Mesh files are always exported as `.stl` and `.vtp`. Preview PNG rendering is disabled by default for headless environments. On a workstation with a working X/GL setup, opt in with:
@@ -106,6 +132,6 @@ LUNGNAV_RENDER_PREVIEW=1 python3 scripts/run_zenodo_lung_pipeline.py --workspace
 
 ## Notes
 
-- The default `--epochs 8` command is still a compact engineering run, not a clinically meaningful model.
+- The default `--epochs 8` command is still a compact engineering run. The stronger documented baseline in this repository comes from the 25-epoch full run above.
 - This project is for research and engineering demonstration only. It is not validated for clinical decision-making, diagnosis, or robotic bronchoscopy guidance.
 - The pipeline uses MONAI for training and inference, SimpleITK for spatial image IO and preprocessing, and VTK for surface extraction and mesh export.

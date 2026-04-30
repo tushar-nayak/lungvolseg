@@ -28,7 +28,7 @@ This model segments lung regions from full-volume chest CT scans to support navi
 ## Intended use
 
 - CT-based bronchoscopy planning research
-- Synthetic workflow demonstrations for segmentation-to-mesh pipelines
+- Segmentation-to-mesh pipeline demonstrations on full-volume chest CT
 - Surface export for visualization or geometry QA
 
 ## Model
