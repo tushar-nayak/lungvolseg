@@ -1,0 +1,7 @@
+numpy>=1.24
+SimpleITK>=2.3
+torch>=2.4
+monai>=1.5
+vtk>=9.2
+nibabel>=5.0
+matplotlib>=3.8
