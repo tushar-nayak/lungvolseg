@@ -1,4 +1,4 @@
-"""Real-data lung CT navigation-prep pipeline."""
+"""LungVolSeg real-data lung CT segmentation pipeline."""
 
 from .zenodo_covid_lung import run_zenodo_lung_pipeline
 

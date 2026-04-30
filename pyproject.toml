@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "lungnav"
+name = "lungvolseg"
 version = "0.1.0"
-description = "Small lung CT navigation-prep pipeline with SimpleITK, MONAI, and VTK."
+description = "LungVolSeg: reproducible lung CT segmentation and surface export with SimpleITK, MONAI, and VTK."
 requires-python = ">=3.10"
 dependencies = [
   "numpy>=1.24",

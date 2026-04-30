@@ -1,4 +1,4 @@
-# A Reproducible Lung CT Navigation-Prep Pipeline for Full-Volume Lung Segmentation and Surface Export
+# LungVolSeg: A Reproducible Full-Volume Lung CT Segmentation and Surface Export Pipeline
 
 ## Abstract
 
@@ -259,8 +259,8 @@ https://zenodo.org/records/3757476
 
 The working code is available in two layouts:
 
-- installable package: `src/lungnav/`
-- root mirror: `code/lungnav/`
+- installable package: `src/lungvolseg/`
+- root mirror: `code/lungvolseg/`
 
 Command-line entrypoints are available in:
 

@@ -2,7 +2,7 @@
 
 This directory mirrors the working Zenodo lung segmentation pipeline from the installable package.
 
-- `lungnav/`: model, training, inference, metrics, VTK mesh export, model-card generation, and Zenodo dataset workflow
+- `lungvolseg/`: model, training, inference, metrics, VTK mesh export, model-card generation, and Zenodo dataset workflow
 - `scripts/`: command-line entrypoints for downloading/preparing data and running the full pipeline
 
 Run directly from the repository root:

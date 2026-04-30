@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 
-from lungnav.zenodo_covid_lung import download_zenodo_lung_dataset, prepare_zenodo_lung_cases
+from lungvolseg.zenodo_covid_lung import download_zenodo_lung_dataset, prepare_zenodo_lung_cases
 
 
 def main() -> None:

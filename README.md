@@ -1,6 +1,6 @@
-# Lung CT Navigation Prep Pipeline
+# LungVolSeg
 
-Real-data lung CT navigation-prep pipeline for full-volume lung segmentation:
+Real-data lung CT segmentation and surface export pipeline for full-volume lung volumes:
 
 1. download a public chest CT segmentation dataset
 2. prepare compact 3D medical volumes with SimpleITK
@@ -36,7 +36,7 @@ The command downloads the dataset, verifies MD5 hashes, extracts 20 full CT volu
 
 The same working model code is also mirrored under `code/`:
 
-- `code/lungnav/`: model, training, inference, metrics, mesh export, and dataset pipeline modules
+- `code/lungvolseg/`: model, training, inference, metrics, mesh export, and dataset pipeline modules
 - `code/scripts/`: runnable downloader and full pipeline scripts
 
 Run the mirrored copy directly with:

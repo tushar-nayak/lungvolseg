@@ -19,7 +19,7 @@ def write_model_card(
     class_names = class_names or training_summary.get("class_names") or {0: "background", 1: "lung"}
     output_classes = ", ".join(str(name) for _, name in sorted(class_names.items()))
     metric_lines = "\n".join(f"- Mean {name}: {value:.4f}" for name, value in sorted(mean_metrics.items()))
-    content = f"""# Lung CT Navigation-Prep Model Card
+    content = f"""# LungVolSeg Model Card
 
 ## Overview
 
@@ -28,7 +28,7 @@ This model segments lung regions from full-volume chest CT scans to support navi
 ## Intended use
 
 - CT-based bronchoscopy planning research
-- Segmentation-to-mesh pipeline demonstrations on full-volume chest CT
+- Synthetic workflow demonstrations for segmentation-to-mesh pipelines
 - Surface export for visualization or geometry QA
 
 ## Model
