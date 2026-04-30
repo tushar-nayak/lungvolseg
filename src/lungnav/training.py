@@ -42,6 +42,8 @@ def train_model(
     output_dir: str | Path,
     epochs: int = 2,
     learning_rate: float = 1e-3,
+    num_classes: int = 3,
+    class_names: dict[int, str] | None = None,
 ) -> dict[str, object]:
     output_dir = ensure_dir(output_dir)
     train_cases, val_cases = _split_cases(cases)
@@ -50,7 +52,7 @@ def train_model(
         train_cases = train_cases[:-1] or train_cases
 
     device = resolve_device()
-    model = build_model().to(device)
+    model = build_model(out_channels=num_classes).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     criterion = DiceCELoss(to_onehot_y=True, softmax=True)
     metric = DiceMetric(include_background=False, reduction="mean")
@@ -101,6 +103,8 @@ def train_model(
         "device": str(device),
         "epochs": epochs,
         "learning_rate": learning_rate,
+        "num_classes": num_classes,
+        "class_names": class_names or {index: f"class_{index}" for index in range(num_classes)},
         "num_train_cases": len(train_cases),
         "num_val_cases": len(val_cases),
         "best_val_dice": best_score,

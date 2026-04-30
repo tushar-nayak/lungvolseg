@@ -69,15 +69,20 @@ def _render_preview(polydata_map: dict[int, vtk.vtkPolyData], output_path: Path)
     writer.Write()
 
 
-def extract_meshes(label_image_path: str | Path, output_dir: str | Path) -> list[str]:
+def extract_meshes(
+    label_image_path: str | Path,
+    output_dir: str | Path,
+    class_names: dict[int, str] | None = None,
+) -> list[str]:
     output_dir = ensure_dir(output_dir)
+    class_names = class_names or CLASS_NAMES
     reader = vtk.vtkNIFTIImageReader()
     reader.SetFileName(str(label_image_path))
     reader.Update()
 
     outputs: list[str] = []
     preview_map: dict[int, vtk.vtkPolyData] = {}
-    for label_value, label_name in CLASS_NAMES.items():
+    for label_value, label_name in class_names.items():
         if label_value == 0:
             continue
         polydata = _make_surface(reader.GetOutput(), label_value)

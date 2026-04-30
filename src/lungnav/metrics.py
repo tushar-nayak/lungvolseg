@@ -17,11 +17,16 @@ def _load_label_tensor(path: str | Path) -> torch.Tensor:
     return torch.from_numpy(array).unsqueeze(0).unsqueeze(0)
 
 
-def compute_case_metrics(prediction_path: str | Path, reference_path: str | Path) -> dict[str, float]:
+def compute_case_metrics(
+    prediction_path: str | Path,
+    reference_path: str | Path,
+    class_names: dict[int, str] | None = None,
+) -> dict[str, float]:
+    class_names = class_names or CLASS_NAMES
     pred = _load_label_tensor(prediction_path)
     ref = _load_label_tensor(reference_path)
-    pred_oh = AsDiscrete(to_onehot=len(CLASS_NAMES))(pred)
-    ref_oh = AsDiscrete(to_onehot=len(CLASS_NAMES))(ref)
+    pred_oh = AsDiscrete(to_onehot=len(class_names))(pred)
+    ref_oh = AsDiscrete(to_onehot=len(class_names))(ref)
 
     dice = compute_dice(pred_oh, ref_oh, include_background=False).squeeze(0)
     hd95 = compute_hausdorff_distance(
@@ -31,12 +36,12 @@ def compute_case_metrics(prediction_path: str | Path, reference_path: str | Path
         percentile=95.0,
     ).squeeze(0)
 
-    return {
-        "dice_lungs": float(dice[0].item()),
-        "dice_airway": float(dice[1].item()),
-        "hd95_lungs": float(hd95[0].item()),
-        "hd95_airway": float(hd95[1].item()),
-    }
+    results: dict[str, float] = {}
+    for metric_index, label_value in enumerate(sorted(label for label in class_names if label != 0)):
+        label_name = class_names[label_value]
+        results[f"dice_{label_name}"] = float(dice[metric_index].item())
+        results[f"hd95_{label_name}"] = float(hd95[metric_index].item())
+    return results
 
 
 def summarize_metrics(case_metrics: dict[str, dict[str, float]], output_path: str | Path) -> dict[str, object]:

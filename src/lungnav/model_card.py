@@ -9,11 +9,16 @@ def write_model_card(
     output_path: str | Path,
     training_summary: dict[str, object],
     metrics_summary: dict[str, object],
+    dataset_name: str = "synthetic chest CT volumes",
+    class_names: dict[int, str] | None = None,
 ) -> str:
     output_path = Path(output_path)
     ensure_dir(output_path.parent)
 
     mean_metrics = metrics_summary["mean"]
+    class_names = class_names or training_summary.get("class_names") or {0: "background", 1: "lungs", 2: "airway"}
+    output_classes = ", ".join(str(name) for _, name in sorted(class_names.items()))
+    metric_lines = "\n".join(f"- Mean {name}: {value:.4f}" for name, value in sorted(mean_metrics.items()))
     content = f"""# Lung CT Navigation-Prep Model Card
 
 ## Overview
@@ -30,21 +35,18 @@ This model segments lungs and the central airway from chest CT volumes to suppor
 
 - Architecture: MONAI 3D UNet
 - Input: preprocessed chest CT volume resampled to {training_summary.get("spacing", "1.5 mm isotropic")}
-- Output classes: background, lungs, airway
+- Output classes: {output_classes}
 
 ## Training data
 
-- Dataset type: synthetic chest CT volumes included in this repo's demo path unless replaced by external data
+- Dataset type: {dataset_name}
 - Train cases: {training_summary["num_train_cases"]}
 - Validation cases: {training_summary["num_val_cases"]}
 - Epochs: {training_summary["epochs"]}
 
 ## Validation
 
-- Mean Dice, lungs: {mean_metrics["dice_lungs"]:.4f}
-- Mean Dice, airway: {mean_metrics["dice_airway"]:.4f}
-- 95th percentile Hausdorff, lungs: {mean_metrics["hd95_lungs"]:.4f}
-- 95th percentile Hausdorff, airway: {mean_metrics["hd95_airway"]:.4f}
+{metric_lines}
 
 ## Limitations
 
