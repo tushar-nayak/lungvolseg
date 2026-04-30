@@ -2,9 +2,7 @@ from pathlib import Path
 
 CLASS_NAMES = {
     0: "background",
-    1: "ground_glass",
-    2: "consolidation",
-    3: "pleural_effusion",
+    1: "lung",
 }
 
 DEFAULT_SPACING = (1.5, 1.5, 1.5)
