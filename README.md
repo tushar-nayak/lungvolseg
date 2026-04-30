@@ -130,6 +130,25 @@ Mesh files are always exported as `.stl` and `.vtp`. Preview PNG rendering is di
 LUNGNAV_RENDER_PREVIEW=1 python3 scripts/run_zenodo_lung_pipeline.py --workspace outputs/zenodo_lung
 ```
 
+## GitHub Pages
+
+The repository includes a static results page under `docs/`. It publishes lightweight tracked artifacts from the full 25-epoch run:
+
+- summary JSON
+- metrics JSON
+- training summary JSON
+- training curve figure
+- per-case metrics figure
+- best and weakest case overlays
+
+Rebuild the published assets from the saved full run with:
+
+```bash
+python3 scripts/build_results_site_assets.py
+```
+
+To publish on GitHub Pages, set the repository Pages source to the `main` branch and the `/docs` folder.
+
 ## Notes
 
 - The default `--epochs 8` command is still a compact engineering run. The stronger documented baseline in this repository comes from the 25-epoch full run above.

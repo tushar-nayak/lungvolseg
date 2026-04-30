@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lung CT Navigation Prep Pipeline</title>
+    <link rel="stylesheet" href="assets/site.css">
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">GitHub Pages Results</p>
+          <h1>Lung CT Navigation Prep Pipeline</h1>
+          <p class="lede">
+            Real-data full-volume lung CT segmentation pipeline using SimpleITK, MONAI, and VTK.
+            This page publishes the tracked results from the 25-epoch Zenodo full run.
+          </p>
+          <div class="actions">
+            <a href="https://github.com/tushar-nayak/lung-nav">Repository</a>
+            <a href="https://github.com/tushar-nayak/lung-nav/blob/main/README.md">README</a>
+            <a href="https://github.com/tushar-nayak/lung-nav/blob/main/report.md">IMRaD Report</a>
+            <a href="assets/results/metrics_full_e25.json">Metrics JSON</a>
+            <a href="assets/results/training_summary_full_e25.json">Training JSON</a>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="label">Mean Dice</span>
+            <span class="value" id="mean-dice">-</span>
+          </div>
+          <div class="stat">
+            <span class="label">Mean HD95</span>
+            <span class="value" id="mean-hd95">-</span>
+          </div>
+          <div class="stat">
+            <span class="label">Best Val Dice</span>
+            <span class="value" id="best-val-dice">-</span>
+          </div>
+          <div class="stat">
+            <span class="label">Split</span>
+            <span class="value" id="split">-</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="section-head">
+          <h2>Run Summary</h2>
+          <p>Full run on all 20 prepared cases with 25 epochs on CUDA.</p>
+        </div>
+        <div class="summary-grid">
+          <article class="panel">
+            <h3>Dataset</h3>
+            <p>COVID-19 CT Lung and Infection Segmentation Dataset</p>
+            <p>DOI <code>10.5281/zenodo.3757476</code></p>
+            <p>Target: binary lung segmentation</p>
+          </article>
+          <article class="panel">
+            <h3>Model</h3>
+            <p>MONAI 3D UNet</p>
+            <p>Prepared volume shape: <code>96 x 128 x 128</code></p>
+            <p>Output artifacts: NIfTI predictions, STL/VTP meshes, metrics, model card</p>
+          </article>
+          <article class="panel">
+            <h3>Interpretation</h3>
+            <p>
+              The run is strong overall but visibly bimodal. Cases 001 to 010 are near-perfect,
+              while a weaker subgroup appears in cases 011 to 020.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="band figures">
+        <div class="section-head">
+          <h2>Figures</h2>
+          <p>Tracked result artifacts generated from the full run.</p>
+        </div>
+        <div class="figure-grid">
+          <figure class="panel">
+            <img src="assets/results/training_curve.png" alt="Training curve">
+            <figcaption>Training loss and validation Dice over 25 epochs.</figcaption>
+          </figure>
+          <figure class="panel">
+            <img src="assets/results/case_metrics.png" alt="Per-case metrics">
+            <figcaption>Per-case Dice and HD95 across all 20 volumes.</figcaption>
+          </figure>
+          <figure class="panel">
+            <img src="assets/results/best_case_overlay.png" alt="Best case overlay">
+            <figcaption>Best case overlay. Green is label, red is prediction.</figcaption>
+          </figure>
+          <figure class="panel">
+            <img src="assets/results/weak_case_overlay.png" alt="Weak case overlay">
+            <figcaption>Weakest case overlay. The failure pattern is localized and structured.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="section-head">
+          <h2>Case Rankings</h2>
+          <p>Best and weakest cases from the tracked full run.</p>
+        </div>
+        <div class="rank-grid">
+          <article class="panel">
+            <h3>Best Cases</h3>
+            <ul id="best-cases"></ul>
+          </article>
+          <article class="panel">
+            <h3>Weakest Cases</h3>
+            <ul id="weak-cases"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="section-head">
+          <h2>Tracked Files</h2>
+          <p>Only lightweight, publishable result artifacts are committed for this page.</p>
+        </div>
+        <div class="summary-grid">
+          <article class="panel">
+            <h3>JSON</h3>
+            <p><a href="assets/results/summary.json">summary.json</a></p>
+            <p><a href="assets/results/metrics_full_e25.json">metrics_full_e25.json</a></p>
+            <p><a href="assets/results/training_summary_full_e25.json">training_summary_full_e25.json</a></p>
+          </article>
+          <article class="panel">
+            <h3>Repository Docs</h3>
+            <p><a href="https://github.com/tushar-nayak/lung-nav/blob/main/README.md">README.md</a></p>
+            <p><a href="https://github.com/tushar-nayak/lung-nav/blob/main/report.md">report.md</a></p>
+          </article>
+        </div>
+      </section>
+    </main>
+    <script>
+      fetch('assets/results/summary.json')
+        .then((response) => response.json())
+        .then((summary) => {
+          document.getElementById('mean-dice').textContent = summary.mean_metrics.dice_lung.toFixed(4);
+          document.getElementById('mean-hd95').textContent = summary.mean_metrics.hd95_lung.toFixed(4);
+          document.getElementById('best-val-dice').textContent = summary.best_validation_dice.toFixed(4);
+          document.getElementById('split').textContent = `${summary.num_train_cases} / ${summary.num_val_cases}`;
+
+          const bestList = document.getElementById('best-cases');
+          const weakList = document.getElementById('weak-cases');
+          summary.best_cases.forEach((item) => {
+            const li = document.createElement('li');
+            li.textContent = `${item.case_id}: Dice ${item.dice_lung.toFixed(4)}, HD95 ${item.hd95_lung.toFixed(4)}`;
+            bestList.appendChild(li);
+          });
+          summary.weakest_cases.forEach((item) => {
+            const li = document.createElement('li');
+            li.textContent = `${item.case_id}: Dice ${item.dice_lung.toFixed(4)}, HD95 ${item.hd95_lung.toFixed(4)}`;
+            weakList.appendChild(li);
+          });
+        });
+    </script>
+  </body>
+  </html>

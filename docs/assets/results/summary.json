@@ -1,0 +1,176 @@
+{
+  "dataset": "COVID-19 CT Lung and Infection Segmentation Dataset",
+  "doi": "10.5281/zenodo.3757476",
+  "workspace": "outputs/zenodo_lung_full_e25",
+  "mean_metrics": {
+    "dice_lung": 0.9242673814296722,
+    "hd95_lung": 10.590851134061813
+  },
+  "best_validation_dice": 0.9539202451705933,
+  "epochs": 25,
+  "device": "cuda",
+  "num_train_cases": 13,
+  "num_val_cases": 7,
+  "best_cases": [
+    {
+      "case_id": "zenodo_lung_006",
+      "dice_lung": 0.9926038980484009,
+      "hd95_lung": 1.0
+    },
+    {
+      "case_id": "zenodo_lung_001",
+      "dice_lung": 0.9921097159385681,
+      "hd95_lung": 1.0
+    },
+    {
+      "case_id": "zenodo_lung_009",
+      "dice_lung": 0.991626501083374,
+      "hd95_lung": 1.0
+    }
+  ],
+  "weakest_cases": [
+    {
+      "case_id": "zenodo_lung_020",
+      "dice_lung": 0.8455689549446106,
+      "hd95_lung": 19.0
+    },
+    {
+      "case_id": "zenodo_lung_016",
+      "dice_lung": 0.8414122462272644,
+      "hd95_lung": 18.41195297241211
+    },
+    {
+      "case_id": "zenodo_lung_017",
+      "dice_lung": 0.7808455228805542,
+      "hd95_lung": 16.76305389404297
+    }
+  ],
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.7965623965630164,
+      "val_dice": 0.8137869834899902
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.45559382897156936,
+      "val_dice": 0.8940457105636597
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.29859031163729155,
+      "val_dice": 0.9218230843544006
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.22275064083246085,
+      "val_dice": 0.9315038323402405
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.17803634817783648,
+      "val_dice": 0.936585545539856
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.1547177445430022,
+      "val_dice": 0.9365377426147461
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.14395424952873817,
+      "val_dice": 0.9384771585464478
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.13710603920313028,
+      "val_dice": 0.9324427247047424
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.1219253597351221,
+      "val_dice": 0.9358949661254883
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.1086675117795284,
+      "val_dice": 0.9450822472572327
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.09993432691464058,
+      "val_dice": 0.9439553022384644
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.09189996524499013,
+      "val_dice": 0.9456437230110168
+    },
+    {
+      "epoch": 13,
+      "train_loss": 0.08811248208467777,
+      "val_dice": 0.9494844079017639
+    },
+    {
+      "epoch": 14,
+      "train_loss": 0.08259457865586647,
+      "val_dice": 0.9439782500267029
+    },
+    {
+      "epoch": 15,
+      "train_loss": 0.08551208904156318,
+      "val_dice": 0.9461687207221985
+    },
+    {
+      "epoch": 16,
+      "train_loss": 0.08220311655448033,
+      "val_dice": 0.9465957283973694
+    },
+    {
+      "epoch": 17,
+      "train_loss": 0.07529287556043038,
+      "val_dice": 0.94902503490448
+    },
+    {
+      "epoch": 18,
+      "train_loss": 0.07014285744382785,
+      "val_dice": 0.9508883357048035
+    },
+    {
+      "epoch": 19,
+      "train_loss": 0.07010523659678605,
+      "val_dice": 0.9494710564613342
+    },
+    {
+      "epoch": 20,
+      "train_loss": 0.06804308151969543,
+      "val_dice": 0.9491676688194275
+    },
+    {
+      "epoch": 21,
+      "train_loss": 0.06551067588421014,
+      "val_dice": 0.9507818818092346
+    },
+    {
+      "epoch": 22,
+      "train_loss": 0.06288302517854251,
+      "val_dice": 0.9500231146812439
+    },
+    {
+      "epoch": 23,
+      "train_loss": 0.06616245955228806,
+      "val_dice": 0.9527921676635742
+    },
+    {
+      "epoch": 24,
+      "train_loss": 0.06158428237988399,
+      "val_dice": 0.9526895880699158
+    },
+    {
+      "epoch": 25,
+      "train_loss": 0.0577649657542889,
+      "val_dice": 0.9539202451705933
+    }
+  ],
+  "model_card_excerpt": "# Lung CT Navigation-Prep Model Card\n\n## Overview\n\nThis model segments lung regions from full-volume chest CT scans to support navigation-prep engineering experiments such as anatomical review, surface generation, and downstream registration prototypes.\n\n## Intended use\n\n- CT-based bronchoscopy planning research\n- Segmentation-to-mesh pipeline demonstrations on full-volume chest CT\n- Surface export for visualization or geometry QA\n\n## Model\n\n- Architecture: MONAI 3D UNet\n- Input: preprocessed chest CT volume resampled to 1.5 mm isotropic\n- Output classes: background, lung\n\n## Training data\n\n- Dataset type: COVID-19 CT Lung and Infection Segmentation Dataset, DOI 10.5281/zenodo.3757476\n- Train cases: 13\n- Validation cases: 7\n- Epochs: 25\n\n## Validation\n\n- Mean dice_lung: 0.9243\n- Mean hd95_lung: 10.5909\n\n## Limitations\n\n- The default training command is a smoke test and is not clinically representative.\n- Performance across scanners, pathology, noise, and acquisition variability is unknown without broader external validation.\n- Mesh quality depends on label fidelity and may require post-processing for procedural planning use.\n\n## Safety\n\nThis project is for research and engineering demonstration only. It is not validated for clinical decision-making or robotic bronchoscopy guidance.\n"
+}

@@ -1,0 +1,88 @@
+{
+  "per_case": {
+    "zenodo_lung_001": {
+      "dice_lung": 0.9921097159385681,
+      "hd95_lung": 1.0
+    },
+    "zenodo_lung_002": {
+      "dice_lung": 0.9847863912582397,
+      "hd95_lung": 5.0
+    },
+    "zenodo_lung_003": {
+      "dice_lung": 0.9797230958938599,
+      "hd95_lung": 5.0
+    },
+    "zenodo_lung_004": {
+      "dice_lung": 0.9880125522613525,
+      "hd95_lung": 4.0
+    },
+    "zenodo_lung_005": {
+      "dice_lung": 0.9877281785011292,
+      "hd95_lung": 4.0
+    },
+    "zenodo_lung_006": {
+      "dice_lung": 0.9926038980484009,
+      "hd95_lung": 1.0
+    },
+    "zenodo_lung_007": {
+      "dice_lung": 0.9892779588699341,
+      "hd95_lung": 1.4142135381698608
+    },
+    "zenodo_lung_008": {
+      "dice_lung": 0.9907812476158142,
+      "hd95_lung": 1.0
+    },
+    "zenodo_lung_009": {
+      "dice_lung": 0.991626501083374,
+      "hd95_lung": 1.0
+    },
+    "zenodo_lung_010": {
+      "dice_lung": 0.9886056184768677,
+      "hd95_lung": 1.0
+    },
+    "zenodo_lung_011": {
+      "dice_lung": 0.8636452555656433,
+      "hd95_lung": 20.0
+    },
+    "zenodo_lung_012": {
+      "dice_lung": 0.8588665127754211,
+      "hd95_lung": 18.0
+    },
+    "zenodo_lung_013": {
+      "dice_lung": 0.8677840828895569,
+      "hd95_lung": 14.628738403320312
+    },
+    "zenodo_lung_014": {
+      "dice_lung": 0.8777569532394409,
+      "hd95_lung": 19.621416091918945
+    },
+    "zenodo_lung_015": {
+      "dice_lung": 0.9029672145843506,
+      "hd95_lung": 19.748416900634766
+    },
+    "zenodo_lung_016": {
+      "dice_lung": 0.8414122462272644,
+      "hd95_lung": 18.41195297241211
+    },
+    "zenodo_lung_017": {
+      "dice_lung": 0.7808455228805542,
+      "hd95_lung": 16.76305389404297
+    },
+    "zenodo_lung_018": {
+      "dice_lung": 0.8865673542022705,
+      "hd95_lung": 20.808652877807617
+    },
+    "zenodo_lung_019": {
+      "dice_lung": 0.874678373336792,
+      "hd95_lung": 20.420578002929688
+    },
+    "zenodo_lung_020": {
+      "dice_lung": 0.8455689549446106,
+      "hd95_lung": 19.0
+    }
+  },
+  "mean": {
+    "dice_lung": 0.9242673814296722,
+    "hd95_lung": 10.590851134061813
+  }
+}
