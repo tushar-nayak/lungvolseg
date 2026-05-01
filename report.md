@@ -277,3 +277,51 @@ This project implements a real-data, full-volume lung CT segmentation pipeline f
 2. MONAI Consortium. MONAI: Medical Open Network for AI.
 3. Lowekamp BC, Chen DT, Ibanez L, Blezek D. The Design of SimpleITK.
 4. Schroeder W, Martin K, Lorensen B. The Visualization Toolkit.
+
+## Appendix: Airway Centerlines
+
+In addition to the lung segmentation pipeline, the repository includes a separate airway workflow for branch tracing and route planning on an airway surface mesh. This appendix is intentionally small and documents only the added airway helpers without changing the main lung segmentation study.
+
+The airway workflow consists of three scripts:
+
+- `scripts/airway_centerlines.py` for VMTK centerline extraction
+- `scripts/airway_route.py` for Dijkstra routing on the centerline graph
+- `scripts/airway_visualize.py` for overlay rendering of surface, centerlines, and route
+
+The expected usage is:
+
+```bash
+python3 scripts/airway_centerlines.py \
+  --surface airway_surface.vtp \
+  --output airway_centerlines.vtp \
+  --source-point 0,0,0 \
+  --target-point 12,8,-40
+```
+
+```bash
+python3 scripts/airway_route.py \
+  --centerlines airway_centerlines.vtp \
+  --source-point 0,0,0 \
+  --target-point 18,4,-55 \
+  --output airway_route.vtp
+```
+
+```bash
+python3 scripts/airway_visualize.py \
+  --surface airway_surface.vtp \
+  --centerlines airway_centerlines.vtp \
+  --route airway_route.vtp \
+  --output airway_overlay.png
+```
+
+The route can also be understood as a simple centerline graph schematic:
+
+```mermaid
+flowchart TD
+    T[Trachea seed] --> C[Centerline graph]
+    C --> B1[Branch 1]
+    C --> B2[Branch 2]
+    C --> B3[Branch 3]
+    B3 --> P[Peripheral target]
+    P -. shortest path .-> R[Highlighted route]
+```
