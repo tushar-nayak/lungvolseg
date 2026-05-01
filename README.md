@@ -130,6 +130,43 @@ Mesh files are always exported as `.stl` and `.vtp`. Preview PNG rendering is di
 LUNGNAV_RENDER_PREVIEW=1 python3 scripts/run_zenodo_lung_pipeline.py --workspace outputs/zenodo_lung
 ```
 
+## Airway Modeling
+
+The airway helpers are separate from the lung segmentation pipeline. They expect a real airway surface mesh, then compute VMTK centerlines and a shortest route on the resulting centerline graph.
+
+Extract centerlines:
+
+```bash
+python3 scripts/airway_centerlines.py \
+  --surface airway_surface.vtp \
+  --output airway_centerlines.vtp \
+  --source-point 0,0,0 \
+  --target-point 12,8,-40 \
+  --target-point 18,4,-55
+```
+
+Trace a route from the trachea seed to a peripheral target coordinate:
+
+```bash
+python3 scripts/airway_route.py \
+  --centerlines airway_centerlines.vtp \
+  --source-point 0,0,0 \
+  --target-point 18,4,-55 \
+  --output airway_route.vtp
+```
+
+Render the airway surface, centerlines, and route to a PNG:
+
+```bash
+python3 scripts/airway_visualize.py \
+  --surface airway_surface.vtp \
+  --centerlines airway_centerlines.vtp \
+  --route airway_route.vtp \
+  --output airway_overlay.png
+```
+
+The viewer uses VTK and is safe for headless exports through offscreen rendering.
+
 
 
 ```bash
