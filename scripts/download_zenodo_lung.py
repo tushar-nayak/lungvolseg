@@ -7,14 +7,21 @@ import json
 from lungvolseg.zenodo_covid_lung import download_zenodo_lung_dataset, prepare_zenodo_lung_cases
 
 
+def _positive_int(value: str) -> int:
+    parsed = int(value)
+    if parsed <= 0:
+        raise argparse.ArgumentTypeError("Value must be a positive integer.")
+    return parsed
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--raw-dir", default="data/real/zenodo_lung/raw")
     parser.add_argument("--cases-dir", default="data/real/zenodo_lung/cases")
-    parser.add_argument("--target-depth", type=int, default=96)
-    parser.add_argument("--target-height", type=int, default=128)
-    parser.add_argument("--target-width", type=int, default=128)
-    parser.add_argument("--max-cases", type=int, default=None)
+    parser.add_argument("--target-depth", type=_positive_int, default=96)
+    parser.add_argument("--target-height", type=_positive_int, default=128)
+    parser.add_argument("--target-width", type=_positive_int, default=128)
+    parser.add_argument("--max-cases", type=_positive_int, default=None)
     args = parser.parse_args()
 
     download_zenodo_lung_dataset(args.raw_dir)
