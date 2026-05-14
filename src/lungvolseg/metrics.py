@@ -45,6 +45,9 @@ def compute_case_metrics(
 
 
 def summarize_metrics(case_metrics: dict[str, dict[str, float]], output_path: str | Path) -> dict[str, object]:
+    if not case_metrics:
+        raise ValueError("case_metrics must contain at least one case.")
+
     ensure_dir(Path(output_path).parent)
     metric_names = list(next(iter(case_metrics.values())).keys())
     summary = {
