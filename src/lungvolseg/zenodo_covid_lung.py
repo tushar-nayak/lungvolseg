@@ -36,6 +36,18 @@ ZENODO_FILES = {
 }
 
 
+def _validate_positive_int(value: int, name: str) -> None:
+    if value <= 0:
+        raise ValueError(f"{name} must be a positive integer, got {value}.")
+
+
+def _validate_target_shape(target_shape: tuple[int, int, int]) -> None:
+    if len(target_shape) != 3:
+        raise ValueError(f"target_shape must contain exactly 3 integers, got {target_shape}.")
+    for axis_name, axis_size in zip(("depth", "height", "width"), target_shape):
+        _validate_positive_int(int(axis_size), f"target_shape {axis_name}")
+
+
 def _md5(path: Path) -> str:
     digest = hashlib.md5()
     with path.open("rb") as handle:
@@ -150,6 +162,10 @@ def prepare_zenodo_lung_cases(
     target_shape: tuple[int, int, int] = (96, 128, 128),
     max_cases: int | None = None,
 ) -> list[dict[str, str]]:
+    _validate_target_shape(target_shape)
+    if max_cases is not None:
+        _validate_positive_int(max_cases, "max_cases")
+
     raw_dir = Path(raw_dir)
     output_dir = ensure_dir(output_dir)
     image_root = _extract_zip(raw_dir / "COVID-19-CT-Seg_20cases.zip", raw_dir / "extracted")
@@ -195,6 +211,11 @@ def run_zenodo_lung_pipeline(
     target_shape: tuple[int, int, int] = (96, 128, 128),
     max_cases: int | None = None,
 ) -> dict[str, object]:
+    _validate_positive_int(epochs, "epochs")
+    _validate_target_shape(target_shape)
+    if max_cases is not None:
+        _validate_positive_int(max_cases, "max_cases")
+
     workspace = ensure_dir(workspace)
     raw_dir = ensure_dir(Path(workspace) / "raw")
     cases_dir = ensure_dir(Path(workspace) / "cases")
