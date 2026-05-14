@@ -76,7 +76,7 @@ def main() -> None:
     window = vtk.vtkRenderWindow()
     window.AddRenderer(renderer)
     window.SetSize(1600, 1200)
-    window.SetOffScreenRendering(1)
+    window.SetOffScreenRendering(0 if args.show else 1)
 
     window.Render()
 
