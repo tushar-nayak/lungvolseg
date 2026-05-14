@@ -19,6 +19,14 @@ python3 -m pip install -r requirements.txt
 python3 -m pip install -e .
 ```
 
+## Tests
+
+Run the validation-focused unit tests with:
+
+```bash
+python3 -m unittest tests.test_validation -v
+```
+
 ## Quick Start
 
 Run the complete Zenodo full-volume lung segmentation workflow:
