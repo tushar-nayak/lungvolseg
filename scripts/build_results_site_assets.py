@@ -129,9 +129,12 @@ def main() -> None:
         "model_card_excerpt": model_card,
     }
 
-    (docs_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
-    (docs_dir / "metrics_full_e25.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
-    (docs_dir / "training_summary_full_e25.json").write_text(json.dumps(training, indent=2), encoding="utf-8")
+    (docs_dir / "summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8")
+    (docs_dir / "metrics_full_e25.json").write_text(json.dumps(metrics, indent=2, sort_keys=True), encoding="utf-8")
+    (docs_dir / "training_summary_full_e25.json").write_text(
+        json.dumps(training, indent=2, sort_keys=True),
+        encoding="utf-8",
+    )
 
     plot_training_curve(training["history"], docs_dir / "training_curve.png")
     plot_case_metrics(per_case, docs_dir / "case_metrics.png")
