@@ -198,8 +198,7 @@ def shortest_path_route(
     route.GetPointData().AddArray(cumulative)
 
     return route, {
-        "source_point_id": float(source_id),
-        "target_point_id": float(target_id),
+        "source_point_id": source_id,
+        "target_point_id": target_id,
         "path_length": float(total_length),
     }
-
