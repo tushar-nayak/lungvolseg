@@ -121,5 +121,5 @@ def train_model(
         "checkpoint": str(best_model_path),
     }
     with open(output_dir / "training_summary.json", "w", encoding="utf-8") as handle:
-        json.dump(metadata, handle, indent=2)
+        json.dump(metadata, handle, indent=2, sort_keys=True)
     return metadata

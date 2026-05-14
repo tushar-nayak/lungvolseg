@@ -89,6 +89,7 @@ def download_zenodo_lung_dataset(output_dir: str | Path) -> dict[str, str]:
                 "files": ZENODO_FILES,
             },
             indent=2,
+            sort_keys=True,
         ),
         encoding="utf-8",
     )
@@ -201,7 +202,7 @@ def prepare_zenodo_lung_cases(
         sitk.WriteImage(output_label, str(output_label_path))
         cases.append({"case_id": case_id, "image": str(output_image_path), "label": str(output_label_path)})
 
-    (output_dir / "cases.json").write_text(json.dumps(cases, indent=2), encoding="utf-8")
+    (output_dir / "cases.json").write_text(json.dumps(cases, indent=2, sort_keys=True), encoding="utf-8")
     return cases
 
 

@@ -58,5 +58,5 @@ def summarize_metrics(case_metrics: dict[str, dict[str, float]], output_path: st
         },
     }
     with open(output_path, "w", encoding="utf-8") as handle:
-        json.dump(summary, handle, indent=2)
+        json.dump(summary, handle, indent=2, sort_keys=True)
     return summary
