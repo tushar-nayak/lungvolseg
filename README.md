@@ -167,7 +167,9 @@ python3 scripts/airway_visualize.py \
 
 The viewer uses VTK and is safe for headless exports through offscreen rendering.
 
+## Results Site
 
+Rebuild the tracked JSON and figure assets used by the static results page in `docs/`:
 
 ```bash
 python3 scripts/build_results_site_assets.py
