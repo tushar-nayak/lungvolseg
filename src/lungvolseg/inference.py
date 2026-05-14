@@ -13,6 +13,14 @@ from .model import build_model
 from .runtime import resolve_device
 
 
+def _validate_patch_size(patch_size: tuple[int, int, int]) -> None:
+    if len(patch_size) != 3:
+        raise ValueError(f"patch_size must contain exactly 3 integers, got {patch_size}.")
+    for axis_name, axis_size in zip(("depth", "height", "width"), patch_size):
+        if int(axis_size) <= 0:
+            raise ValueError(f"patch_size {axis_name} must be positive, got {axis_size}.")
+
+
 def infer_case(
     checkpoint_path: str | Path,
     image_path: str | Path,
@@ -20,6 +28,10 @@ def infer_case(
     num_classes: int = 3,
     patch_size: tuple[int, int, int] = DEFAULT_PATCH_SIZE,
 ) -> str:
+    if num_classes <= 1:
+        raise ValueError(f"num_classes must be greater than 1, got {num_classes}.")
+    _validate_patch_size(patch_size)
+
     device = resolve_device()
     model = build_model(out_channels=num_classes).to(device)
     model.load_state_dict(torch.load(checkpoint_path, map_location=device))
