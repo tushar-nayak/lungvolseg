@@ -174,8 +174,20 @@
       </section>
     </main>
     <script>
+      function setSummaryError(message) {
+        document.getElementById('mean-dice').textContent = message;
+        document.getElementById('mean-hd95').textContent = message;
+        document.getElementById('best-val-dice').textContent = message;
+        document.getElementById('split').textContent = message;
+      }
+
       fetch('assets/results/summary.json')
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Failed to load summary.json: ${response.status}`);
+          }
+          return response.json();
+        })
         .then((summary) => {
           document.getElementById('mean-dice').textContent = summary.mean_metrics.dice_lung.toFixed(4);
           document.getElementById('mean-hd95').textContent = summary.mean_metrics.hd95_lung.toFixed(4);
@@ -194,6 +206,10 @@
             li.textContent = `${item.case_id}: Dice ${item.dice_lung.toFixed(4)}, HD95 ${item.hd95_lung.toFixed(4)}`;
             weakList.appendChild(li);
           });
+        })
+        .catch((error) => {
+          console.error(error);
+          setSummaryError('unavailable');
         });
     </script>
   </body>
