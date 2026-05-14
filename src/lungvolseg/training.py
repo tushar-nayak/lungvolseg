@@ -45,6 +45,15 @@ def train_model(
     num_classes: int = 3,
     class_names: dict[int, str] | None = None,
 ) -> dict[str, object]:
+    if not cases:
+        raise ValueError("cases must contain at least one training example.")
+    if epochs <= 0:
+        raise ValueError(f"epochs must be a positive integer, got {epochs}.")
+    if learning_rate <= 0:
+        raise ValueError(f"learning_rate must be positive, got {learning_rate}.")
+    if num_classes <= 1:
+        raise ValueError(f"num_classes must be greater than 1, got {num_classes}.")
+
     output_dir = ensure_dir(output_dir)
     train_cases, val_cases = _split_cases(cases)
     if not val_cases:
